@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>evozon.plugin</groupId>
+	<groupId>com.github.vvoicu</groupId>
 	<artifactId>testrail-reporter-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 	<version>0.0.1</version>
@@ -12,9 +12,7 @@
 	<developers>
 		<developer>
 			<name>Voicu Vlad</name>
-			<email>voicu.vac@evozon.com</email>
-			<organization>Evozon</organization>
-			<organizationUrl>http://www.evozon.com</organizationUrl>
+			<email>dippy_9mm@yahoo.com</email>
 		</developer>
 	</developers>
 
@@ -53,7 +51,6 @@
 			<groupId>net.serenity-bdd</groupId>
 			<artifactId>serenity-core</artifactId>
 			<version>${serenity.version}</version>
-			<!-- <scope>provided</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>net.serenity-bdd</groupId>
@@ -90,15 +87,4 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>sample.plugin</groupId>
-				<artifactId>hello-maven-plugin</artifactId>
-				<version>0.0.1</version>
-			</plugin>
-		</plugins>
-	</build>
 </project>

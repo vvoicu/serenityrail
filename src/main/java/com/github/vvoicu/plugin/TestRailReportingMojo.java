@@ -1,4 +1,4 @@
-package evozon.plugin;
+package com.github.vvoicu.plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,34 +8,39 @@ import java.util.Map;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Mojo;
 
-import evozon.testrail.APIClient;
-import evozon.testrail.APIException;
-import evozon.testrail.ResponderUtils;
+import com.github.vvoicu.serenity.SerenityUtils;
+import com.github.vvoicu.testrail.APIClient;
+import com.github.vvoicu.testrail.APIException;
+import com.github.vvoicu.testrail.ResponderUtils;
+
 import net.thucydides.core.model.TestOutcome;
 import net.thucydides.core.reports.TestOutcomeLoader;
 import net.thucydides.core.reports.TestOutcomes;
 import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.util.SystemEnvironmentVariables;
 
-@Mojo(name = "railer")
+
+/**
+ * Will publish the Serenity reports to TestRail. Each test that gets published should contain a tag (ex. @testrail:85 , where 85 is the test id in testrail) 
+ * @author vvoicu
+ *
+ */
+@Mojo(name = "publishreport")
 public class TestRailReportingMojo extends AbstractMojo {
-	// @parameter expression="${project.build.directory}"
 
 	private String reportFolderPath = "target" + File.separator + "site" + File.separator + "serenity" + File.separator;
 	private String testRailBaseUrl = "";
 	private String testRailUsername = "";
 	private String testRailPassword = "";
-	// private String testRailBaseUrl = "https://matchesfashion1.testrail.net/";
-	// private String testRailUsername = "voicu.vac@evozon.com";
-	// private String testRailPassword = "Matches123";
 
+	
 	public void execute() {
 
 		getLog().info("---- Serenity-bdd & TestRail Reporter ----");
-		TestOutcomes outcomes = grabSerenityReportData();
+		TestOutcomes outcomes = grabSerenityReportData(reportFolderPath);
 		overwriteConfigDefaults();
 
-		// printSerenityReport(outcomes);
+//		SerenityUtils.printSerenityReport(outcomes);
 
 		try {
 			sendPostAddResultsToTestRail(outcomes);
@@ -49,28 +54,13 @@ public class TestRailReportingMojo extends AbstractMojo {
 
 	}
 
-	public void overwriteConfigDefaults() {
-		EnvironmentVariables variables = SystemEnvironmentVariables.createEnvironmentVariables();
-
-		if (!variables.getProperty("testrail.url").isEmpty())
-			testRailBaseUrl = variables.getProperty("testrail.url");
-		if (!variables.getProperty("testrail.user").isEmpty())
-			testRailUsername = variables.getProperty("testrail.user");
-		if (!variables.getProperty("testrail.pass").isEmpty())
-			testRailPassword = variables.getProperty("testrail.pass");
-		
-		 getLog().info("BaseUrl: " + testRailBaseUrl);
-		 getLog().info("UserName: " + testRailUsername);
-		 getLog().info("UserPass: " + testRailPassword);
-	}
-
 	/**
 	 * Will look in the default serenity reports folder and extract all the test
 	 * results found.
 	 * 
 	 * @return
 	 */
-	public TestOutcomes grabSerenityReportData() {
+	public TestOutcomes grabSerenityReportData(String reportFolderPath) {
 
 		getLog().info("Gathering Serenity reports data...");
 
@@ -90,28 +80,22 @@ public class TestRailReportingMojo extends AbstractMojo {
 	}
 
 	/**
-	 * Print data extracted from the serenity reports
-	 * 
-	 * @param outcomes
+	 * Will extract the properties related to testrail (url, user, pass) that should be mentioned in the serenity.properties file.
 	 */
-	public void printSerenityReport(TestOutcomes outcomes) {
+	public void overwriteConfigDefaults() {
+		getLog().info("Gathering global Testrail properties ");
+		EnvironmentVariables variables = SystemEnvironmentVariables.createEnvironmentVariables();
 
-		getLog().info("Printing Serenity Outcomes...");
-		for (final TestOutcome outcome : outcomes.getOutcomes()) {
-			System.out.println("-----------------------------");
-			System.out.println(outcome.getCompleteName());
-			System.out.println(outcome.getTestCaseName());
-			System.out.println(outcome.getResult());
-			System.out.println(outcome.getDurationInSeconds());
-			System.out.println(outcome.getDataTable());
-			System.out.println(outcome.getIssueKeys());
-			System.out.println(outcome.getTags());
-			System.out.println(outcome.getDescription());
-			System.out.println(outcome.getIssues());
-			System.out.println(outcome.getFailureDetails().getCompleteErrorMessage());
-			System.out.println(outcome.getFailureDetails().getConciseErrorMessage());
+		if (!variables.getProperty("testrail.url").isEmpty())
+			testRailBaseUrl = variables.getProperty("testrail.url");
+		if (!variables.getProperty("testrail.user").isEmpty())
+			testRailUsername = variables.getProperty("testrail.user");
+		if (!variables.getProperty("testrail.pass").isEmpty())
+			testRailPassword = variables.getProperty("testrail.pass");
 
-		}
+		getLog().info("BaseUrl: " + testRailBaseUrl);
+		getLog().info("UserName: " + testRailUsername);
+		getLog().info("UserPass: " + testRailPassword);
 	}
 
 	/**
@@ -123,7 +107,7 @@ public class TestRailReportingMojo extends AbstractMojo {
 	 * @throws IOException
 	 * @throws APIException
 	 */
-	@SuppressWarnings({ "rawtypes"})
+	@SuppressWarnings({ "rawtypes" })
 	public void sendPostAddResultsToTestRail(TestOutcomes outcomes)
 			throws MalformedURLException, IOException, APIException {
 
@@ -137,15 +121,12 @@ public class TestRailReportingMojo extends AbstractMojo {
 
 			getLog().info("test lookup...");
 			String testRailTestCaseTag = ResponderUtils.extractTestRailTagIssue(outcome);
-			
+
 			if (!testRailTestCaseTag.isEmpty()) {
 
 				Map data = ResponderUtils.formRequestAddResult(outcome);
 				getLog().info(testRailTestCaseTag + " TestCase reported.");
 				client.sendPost("add_result/" + testRailTestCaseTag, data);
-//				JSONObject response = (JSONObject) client.sendPost("add_result/" + testRailTestCaseTag, data);
-
-				// System.out.println("TestRail response: " + response.toString());
 			}
 		}
 	}

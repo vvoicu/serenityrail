@@ -1,9 +1,7 @@
-package evozon.testrail;
+package com.github.vvoicu.testrail;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.json.simple.JSONValue;
 
 import net.thucydides.core.model.TestOutcome;
 import net.thucydides.core.model.TestTag;

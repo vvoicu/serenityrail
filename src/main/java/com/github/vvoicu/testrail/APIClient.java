@@ -1,4 +1,4 @@
-package evozon.testrail;
+package com.github.vvoicu.testrail;
 /**
  * TestRail API binding for Java (API v2, available since TestRail 3.0)
  *
