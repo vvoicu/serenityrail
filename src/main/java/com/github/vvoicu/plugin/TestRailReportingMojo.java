@@ -8,7 +8,6 @@ import java.util.Map;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Mojo;
 
-import com.github.vvoicu.serenity.SerenityUtils;
 import com.github.vvoicu.testrail.APIClient;
 import com.github.vvoicu.testrail.APIException;
 import com.github.vvoicu.testrail.ResponderUtils;
