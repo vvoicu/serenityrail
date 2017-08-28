@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>evozon.plugin</groupId>
+	<artifactId>testrail-reporter-maven-plugin</artifactId>
+	<packaging>maven-plugin</packaging>
+	<version>0.0.1</version>
+	<name>${project.groupId}:${project.artifactId}</name>
+	<url>http://github.com/vvoicu/serenityrail</url>
+
+
+	<developers>
+		<developer>
+			<name>Voicu Vlad</name>
+			<email>voicu.vac@evozon.com</email>
+			<organization>Evozon</organization>
+			<organizationUrl>http://www.evozon.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/vvoicu/serenityrail.git</connection>
+		<developerConnection>scm:git:ssh://github.com:vvoicu/serenityrail.git</developerConnection>
+		<url>http://github.com/vvoicu/serenityrail</url>
+	</scm>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<properties>
+		<serenity.version>1.5.3</serenity.version>
+		<serenity.cucumber.version>1.5.4</serenity.cucumber.version>
+		<serenity.restassured.version>1.4.1-rc.7</serenity.restassured.version>
+		<junit.version>4.11</junit.version>
+		<testrail.api.version>2.0.0</testrail.api.version>
+		<maven.plugin.api.version>3.0</maven.plugin.api.version>
+		<maven.plugin.annotations.version>3.4</maven.plugin.annotations.version>
+	</properties>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.serenity-bdd</groupId>
+			<artifactId>serenity-core</artifactId>
+			<version>${serenity.version}</version>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>net.serenity-bdd</groupId>
+			<artifactId>serenity-cucumber</artifactId>
+			<version>${serenity.cucumber.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.serenity-bdd</groupId>
+			<artifactId>serenity-rest-assured</artifactId>
+			<version>${serenity.restassured.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.codepine.api</groupId>
+			<artifactId>testrail-api-java-client</artifactId>
+			<version>${testrail.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>${maven.plugin.api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+			<version>${maven.plugin.annotations.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>sample.plugin</groupId>
+				<artifactId>hello-maven-plugin</artifactId>
+				<version>0.0.1</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>
