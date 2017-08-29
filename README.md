@@ -17,15 +17,15 @@ plugin for Serenity-BDD and Testrail. Publish Serenity test reports to Testrail.
       on your scenario add the tag to which test to report the results 
       (the issue tag is for the jira integration, that is supported and documented in serenity-bdd)
       [sample]
-      @issue:EK-732 
-      @testrail:T260
-      @done @detailed @bug @EK-732 
-      Scenario: (1) Clicking 'ADD A NEW ADDRESS' in the Address Book page causes the page to auto-scroll to the top.
-  	    Given I am signed in to the website as a customer
-	      And I navigate to the Address Book page
-	      When I click on 'ADD A NEW ADDRESS'
-	      Then I should see the 'ADD ADDRESS' section
-	      And clicking 'CANCEL' should close the 'ADD ADDRESS' form
+      @issue:EK-732 \n
+      @testrail:T260 \n
+      @done @detailed @bug @EK-732 \n
+      Scenario: (1) Clicking 'ADD A NEW ADDRESS' in the Address Book page causes the page to auto-scroll to the top. \n
+  	    Given I am signed in to the website as a customer \n
+	      And I navigate to the Address Book page \n
+	      When I click on 'ADD A NEW ADDRESS' \n
+	      Then I should see the 'ADD ADDRESS' section \n
+	      And clicking 'CANCEL' should close the 'ADD ADDRESS' form \n
 
 #Local configuration
     If you will take the code directly from github, just run the "mvn install" command so the plugin will get set up in your local maven repository
